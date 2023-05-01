@@ -48,12 +48,15 @@ const deleteSong = async(req,res) => {
     } catch (error) {
         res.status(400).send(error.message);
     }
-}
+};
 
 //Get all song data 
 const allSong = async(req,res) => {
     try {
-        const songData = await song.find().sort({ createdAt: -1 });
+        const page = parseInt(req.query.page);
+        const pageSize = parseInt(req.query.pageSize);
+        const skip = (page - 1) * pageSize;
+        const songData = await song.find().sort({ createdAt: -1 }).skip(skip).limit(pageSize);
         if (songData) {
             res.status(200).send({success:true,msg:"All song data",data:songData});
             
@@ -81,22 +84,27 @@ const singleSong = async(req,res) => {
     } catch (error) {
         res.status(400).send(error.message);
     }
-}
+};
 
 //Search song by title 
 const searchSong = async(req,res) => {
     try {
+        const page = parseInt(req.query.page);
+        const pageSize = parseInt(req.query.pageSize);
+        const skip = (page - 1) * pageSize;
         const title = req.params.title;
-        const searchSong = await song.find({title: { $regex: title, $options: 'i' }});
-        if (searchSong) {
-            res.status(200).send({success:true,msg:"Your search song results",data:searchSong});
-        } else {
+        
+        const searchSong = await song.find({title: { $regex: title, $options: 'i' }}).skip(skip).limit(pageSize);
+        if (searchSong.length === 0) {
             res.status(400).send({success:false,msg:"Can't find your search result"});
+        } else {
+            res.status(200).send({success:true,msg:"Your search song results",data:searchSong});
+
         }
     } catch (error) {
         res.status(400).send(error.message);
     }
-}
+};
 
 module.exports = {
     addSong,

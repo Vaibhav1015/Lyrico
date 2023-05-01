@@ -8,7 +8,7 @@ const song = mongoose.Schema(
       },
       artist: {
         type: String,
-        required: true
+        required: false
       },
       lyrics: {
         type: String,
