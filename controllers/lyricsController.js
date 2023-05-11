@@ -1,14 +1,17 @@
 const song = require("../models/lyricsModel");
+const User = require("../models/userModel");
 
 //Add new song to database
 const addSong = async (req, res) => {
   try {
     const newSong = new song({
+      userId: req.params.userId,
       title: req.body.title,
       artist: req.body.artist,
       lyrics: req.body.lyrics,
     });
-    if (newSong) {
+    const userData = await User.findOne({ _id: req.params.userId });
+    if (userData) {
       const saveSong = await newSong.save();
       res.status(200).send({
         success: true,
@@ -26,7 +29,7 @@ const addSong = async (req, res) => {
 //Edit song details using song ID
 const editSong = async (req, res) => {
   try {
-    const songId = req.params.songId;
+    const songId = req.body.songId;
     const checkSong = await song.findOneAndUpdate(
       { _id: songId },
       { $set: req.body },
@@ -51,7 +54,7 @@ const editSong = async (req, res) => {
 //Delete song details using song ID
 const deleteSong = async (req, res) => {
   try {
-    const songId = req.params.songId;
+    const songId = req.body.songId;
     const checkSong = await song.findOneAndDelete({ _id: songId });
     if (checkSong) {
       res
@@ -81,7 +84,7 @@ const allSong = async (req, res) => {
     if (songData) {
       res
         .status(200)
-        .send({ success: true, msg: "All song data", data: songData });
+        .send({ success: true, msg: "All song data", results: songData });
     } else {
       res.status(400).send({
         success: false,

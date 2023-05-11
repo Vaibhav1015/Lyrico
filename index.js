@@ -31,8 +31,12 @@ mongoose
 const lyricsRoute = require("./routes/lyricsRoute");
 app.use("/api", lyricsRoute);
 
+//User Routes
+const userRoute = require("./routes/userRoute");
+app.use("/api", userRoute);
+
 //server listen on
 const port = 5000;
-app.listen(port, "localhost", function () {
+app.listen(port, "192.168.5.85", function () {
   console.log(`Server is started on port ${port}`);
 });
