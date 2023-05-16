@@ -27,7 +27,7 @@ const registerUser = async (req, res) => {
         .send({ success: false, msg: "This Phone number already exits" });
     } else {
       const user_data = await user.save();
-      console.log(user_data, "user data");
+
       res.status(200).send({ success: true, userData: user_data });
     }
   } catch (error) {
