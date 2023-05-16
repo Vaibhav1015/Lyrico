@@ -39,11 +39,11 @@ const registerUser = async (req, res) => {
 
 const userLogin = async (req, res) => {
   try {
-    const { email, phone } = req.body;
+    const { userCred } = req.body;
     const password = req.body.password;
 
     const userData = await User.findOne({
-      $or: [{ email: email }, { phone: phone }],
+      $or: [{ email: userCred }, { phone: userCred }],
     });
 
     if (userData) {
