@@ -9,6 +9,7 @@ const addSong = async (req, res) => {
       title: req.body.title,
       artist: req.body.artist,
       lyrics: req.body.lyrics,
+      videoLink: req.body.videoLink,
     });
     const userData = await User.findOne({ _id: req.params.userId });
     if (userData) {

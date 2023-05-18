@@ -18,6 +18,10 @@ const song = mongoose.Schema(
       type: String,
       required: true,
     },
+    videoLink: {
+      type: String,
+      required: false,
+    },
     createdAt: { type: Date, default: Date.now },
   },
   { versionKey: false }
