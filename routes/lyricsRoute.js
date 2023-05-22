@@ -7,6 +7,7 @@ const {
   allSong,
   singleSong,
   searchSong,
+  categoryFilter,
 } = require("../controllers/lyricsController");
 
 const { isAdmin } = require("../middleware/auth");
@@ -17,5 +18,6 @@ lyricsRoute.delete("/delete-song/:userId", isAdmin, deleteSong);
 lyricsRoute.get("/all-song", allSong);
 lyricsRoute.get("/single-song/:songId", singleSong);
 lyricsRoute.get("/songs/search/:title", searchSong);
+lyricsRoute.get("/songs/:category", categoryFilter);
 
 module.exports = lyricsRoute;

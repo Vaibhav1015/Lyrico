@@ -37,6 +37,6 @@ app.use("/api", userRoute);
 
 //server listen on
 const port = 5000;
-app.listen(port, function () {
+app.listen(port, "192.168.5.85", function () {
   console.log(`Server is started on port ${port}`);
 });

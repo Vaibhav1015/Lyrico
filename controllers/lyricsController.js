@@ -8,6 +8,7 @@ const addSong = async (req, res) => {
       userId: req.params.userId,
       title: req.body.title,
       artist: req.body.artist,
+      category: req.body.category,
       lyrics: req.body.lyrics,
       videoLink: req.body.videoLink,
     });
@@ -144,6 +145,34 @@ const searchSong = async (req, res) => {
   }
 };
 
+//Filter lyrics category wise
+const categoryFilter = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page);
+    const pageSize = parseInt(req.query.pageSize);
+    const skip = (page - 1) * pageSize;
+    const category = req.params.category;
+
+    const categorySong = await song
+      .find({ category: category })
+      .skip(skip)
+      .limit(pageSize);
+    if (categorySong.length === 0) {
+      res
+        .status(400)
+        .send({ success: false, msg: "Can't find your search result" });
+    } else {
+      res.status(200).send({
+        success: true,
+        msg: "Your search song results",
+        data: categorySong,
+      });
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   addSong,
   editSong,
@@ -151,4 +180,5 @@ module.exports = {
   allSong,
   singleSong,
   searchSong,
+  categoryFilter,
 };
