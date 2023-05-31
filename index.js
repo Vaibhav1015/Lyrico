@@ -35,6 +35,10 @@ app.use("/api", lyricsRoute);
 const userRoute = require("./routes/userRoute");
 app.use("/api", userRoute);
 
+// User Favorite lyrics Routes
+const favoriteRoute = require("./routes/favoriteRoute");
+app.use("/api", favoriteRoute);
+
 //server listen on
 const port = 5000;
 app.listen(port, function () {
