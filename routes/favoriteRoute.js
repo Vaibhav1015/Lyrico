@@ -7,8 +7,8 @@ const {
   deleteUserFavorite,
 } = require("../controllers/favoriteController");
 
-favoriteRoute.post("/:userId/favorite-lyrics", addFavorite);
-favoriteRoute.get("/:userId/user-favorites", getUserFavorite);
-favoriteRoute.delete("/:userId/delete-favorite-lyric", deleteUserFavorite);
+favoriteRoute.post("/favorite-lyrics/:userId", addFavorite);
+favoriteRoute.get("/user-favorites/:userId", getUserFavorite);
+favoriteRoute.delete("/delete-favorite-lyric/:userId", deleteUserFavorite);
 
 module.exports = favoriteRoute;
