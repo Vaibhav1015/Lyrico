@@ -8,12 +8,17 @@ const addFavorite = async (req, res) => {
   try {
     const userId = req.params.userId;
     const songId = req.body.songId;
+    const userIdCheck = await User.findById({ _id: userId });
+    const songIdCheck = await song.findById({ _id: songId });
+
+    const { lyrics, title, artist } = songIdCheck;
+    const getLyrics = new Object({ lyrics, title, artist });
+
     const newFavorite = new favorite({
       userId: userId,
       songId: songId,
+      lyricsData: getLyrics,
     });
-    const userIdCheck = await User.findById({ _id: userId });
-    const songIdCheck = await song.findById({ _id: songId });
     if (userIdCheck && songIdCheck) {
       await newFavorite.save();
       res.status(200).send({
@@ -37,6 +42,7 @@ const getUserFavorite = async (req, res) => {
   try {
     const userId = req.params.userId;
     const UserFavorites = await favorite.find({ userId: userId });
+
     if (UserFavorites.length > 0) {
       res.status(200).send({
         success: true,

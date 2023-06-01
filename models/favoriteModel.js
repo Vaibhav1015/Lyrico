@@ -10,6 +10,9 @@ const favorite = mongoose.Schema(
       type: mongoose.Schema.Types.String,
       ref: "Song",
     },
+    lyricsData: {
+      type: Object,
+    },
     createdAt: { type: Date, default: Date.now },
   },
   { versionKey: false }
