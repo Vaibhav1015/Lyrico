@@ -11,8 +11,14 @@ const addFavorite = async (req, res) => {
     const userIdCheck = await User.findById({ _id: userId });
     const songIdCheck = await song.findById({ _id: songId });
 
-    const { lyrics, title, artist } = songIdCheck;
-    const getLyrics = new Object({ lyrics, title, artist });
+    const { lyrics, title, artist, category, videoLink } = songIdCheck;
+    const getLyrics = new Object({
+      lyrics,
+      title,
+      artist,
+      category,
+      videoLink,
+    });
 
     const newFavorite = new favorite({
       userId: userId,
